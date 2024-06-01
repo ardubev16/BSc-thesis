@@ -1,6 +1,6 @@
 {
   "version": "0.2",
-  "language": "en",
+  "language": "it,en",
   "useGitignore": true,
   "import": [
     "@cspell/dict-en_us/cspell-ext.json",
@@ -11,9 +11,11 @@
   ],
   "ignorePaths": ["**/build/", "**/node_modules/", "**/package-lock.json"],
   "words": [
+    "bevilacqua",
     "booktitle",
     "howpublished",
     "latexmk",
+    "lorenzo",
     "nonstopmode",
     "outdir",
     "postbuild"
