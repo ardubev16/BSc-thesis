@@ -2,27 +2,30 @@
 
 ## Chapters
 
-1. Prerequisiti
+1. Introduzione
+
+    - Tirocinio Wuerth Phoenix
+    - Struttura SOC
+
+2. Background
 
    1. OSINT
    2. Threat Intelligience
-   3. Wuerth Phoenix
-   4. SATAYO
+   3. SATAYO
 
-2. Architettura iniziale
+3. Architettura iniziale
 
-   1. Struttura Database
-   2. Macchine Frontend e Utility
-   3. Macchine Robot
-   4. Problemi con architettura attuale
+   1. Macchine Robot, Frontend e Utility
+   2. Struttura Database
+   3. Problemi con architettura corrente
 
-3. Nuova architettura
+4. Nuova architettura
 
    1. Ricerca framework adatto
 
       1. Prerequisiti
       2. Opzioni possibili
-      3. Scelta finale e terminologia
+      3. Scelta finale
 
    2. Implementazione e differenze con architettura RB
 
@@ -32,9 +35,18 @@
 
    3. Monitoraggio
 
-4. Possibili migliorie
+Conclusioni
 
-   1. Implementazione con Kubernetes
-   2. Aggregazione e analisi logs
-   3. Pipeline CI/CD e tests
-   4. Notifiche smart
+- Retrospettiva
+- Possibili migliorie
+  - Implementazione con Kubernetes
+  - Aggregazione e analisi logs
+  - Pipeline CI/CD e tests
+  - Migrazione parte Utility
+  - Notifiche smart
+
+Bibliografia
+
+Appendice
+
+- Terminologia
