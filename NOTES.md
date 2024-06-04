@@ -2,10 +2,10 @@
 
 ## Chapters
 
-1. Introduzione
+1. Contesto
 
-   - Tirocinio Würth Phoenix
-   - Struttura SOC
+   1. Tirocinio Würth Phoenix
+   2. Struttura SOC
 
 2. Background
 
@@ -19,31 +19,30 @@
    2. Struttura Database
    3. Problemi con architettura corrente
 
-4. Nuova architettura
+4. Ricerca framework adatto
 
-   1. Ricerca framework adatto
+   1. Prerequisiti
+   2. Opzioni possibili
+   3. Scelta finale
 
-      1. Prerequisiti
-      2. Opzioni possibili
-      3. Scelta finale
+5. Nuova architettura
 
-   2. Implementazione e differenze con architettura RB
+   1. Implementazione e differenze con architettura precedente
+   2. Ricerche schedulate
+   3. Nuove ricerche
+   4. Task di sistema
+   5. Monitoraggio
 
-      1. Ricerche schedulate
-      2. Nuove ricerche
-      3. Task di sistema
+6. Conclusioni
 
-   3. Monitoraggio
+   1. Retrospettiva
+   2. Possibili migliorie
 
-Conclusioni
-
-- Retrospettiva
-- Possibili migliorie
-  - Implementazione con Kubernetes
-  - Aggregazione e analisi logs
-  - Pipeline CI/CD e tests
-  - Migrazione parte Utility
-  - Notifiche smart
+      1. Implementazione con Kubernetes
+      2. Aggregazione e analisi logs
+      3. Pipeline CI/CD e tests
+      4. Migrazione parte Utility
+      5. Notifiche smart
 
 Bibliografia
 
