@@ -11,6 +11,9 @@
   ],
   "ignorePaths": ["**/build/", "**/node_modules/", "**/package-lock.json"],
   "words": [
+    "OSINT",
+    "SATAYO",
+    "Würth",
     "bevilacqua",
     "booktitle",
     "howpublished",

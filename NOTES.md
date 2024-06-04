@@ -4,13 +4,13 @@
 
 1. Introduzione
 
-    - Tirocinio Wuerth Phoenix
-    - Struttura SOC
+   - Tirocinio Würth Phoenix
+   - Struttura SOC
 
 2. Background
 
    1. OSINT
-   2. Threat Intelligience
+   2. Threat Intelligence
    3. SATAYO
 
 3. Architettura iniziale
