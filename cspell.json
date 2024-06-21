@@ -9,19 +9,29 @@
     "@cspell/dict-markdown/cspell-ext.json",
     "@cspell/dict-npm/cspell-ext.json"
   ],
-  "ignorePaths": ["**/build/", "**/node_modules/", "**/package-lock.json"],
+  "ignorePaths": [
+    "**/build/",
+    "**/images/",
+    "**/node_modules/",
+    "**/package-lock.json",
+    "main.tex"
+  ],
   "words": [
+    "Monitorabilità",
     "OSINT",
+    "Retrocompatibilità",
     "SATAYO",
     "Würth",
     "bevilacqua",
     "booktitle",
+    "hibp",
     "howpublished",
     "inotifywait",
     "latexmk",
     "lorenzo",
     "nonstopmode",
     "outdir",
-    "postbuild"
+    "postbuild",
+    "shodan"
   ]
 }

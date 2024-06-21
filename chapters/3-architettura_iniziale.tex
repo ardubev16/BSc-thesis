@@ -76,7 +76,7 @@ quest'ultima.
 
 L'esecuzione delle fasi viene gestita in modo piuttosto rudimentale: su ogni istanza
 Robot è presente uno script Python \texttt{satayo.py} il quale viene eseguito da
-un Crontab secondo un intervallo regolare di 10 minuti. Questo script è a tutti gli
+un Crontab secondo un intervallo regolare di 5 minuti. Questo script è a tutti gli
 effetti il controllore locale della macchina Robot, ha il compito di eseguire le
 fasi presenti nella coda di quell'istanza e di controllare lo stato di
 esecuzione di esse. Più nel dettaglio lo script esegue le seguenti operazioni:
@@ -185,16 +185,18 @@ delle fasi. Le funzionalità principali sono le seguenti:
 
   \item \textbf{log:} semplice tabella utilizzata per salvare messaggi di log
     provenienti dalle esecuzioni dei vari tool. Contiene il tempo di creazione del
-    log, la gravità, e il messaggio di log stesso. È utile per individuare
-    problemi durante le esecuzioni di task direttamente dal frontend.
+    log, la gravità e il messaggio di log stesso. È utile per individuare problemi
+    durante le esecuzioni di task direttamente dal frontend.
 \end{itemize}
 
+\pagebreak
 \section{Problemi con architettura corrente}
 \label{sec:problemi}
 
 In seguito ad un'analisi di carico e ad una proiezione del numero di domini da monitorare
-nei prossimi mesi, sono emersi immediatamente evidenti i problemi di scalabilità
-che si sarebbero presentati se si fosse mantenuta l'architettura attuale.
+nei prossimi mesi, sono risultati immediatamente evidenti i problemi di
+scalabilità che si sarebbero presentati se si fosse mantenuta l'architettura
+attuale.
 
 Come accennato nelle sezioni precedenti, l'implementazione corrente permette di scalare
 orizzontalmente in modo teoricamente semplice: se c'è bisogno di ulteriore tempo
@@ -202,18 +204,18 @@ di esecuzione è sufficiente aggiungere un'altra macchina Robot, configurarla se
 una data documentazione e aggiungere eventuali entry nel database. Questa può
 essere una valida soluzione in caso non sia necessario eseguire la procedura
 molto spesso. Contrariamente, se fosse necessario scalare in modo più che
-lineare, questa soluzione porterebbe ad un \textbf{notevole dispendio di tempo},
-sia per la configurazione iniziale, ma soprattutto per la gestione e
-manutenzione futura del sistema.
+lineare, questa soluzione porterebbe ad un \textbf{notevole dispendio di tempo}
+per la configurazione iniziale, ma soprattutto per la gestione e manutenzione futura
+del sistema.
 
 Un altro problema, a cui porterebbe un simile approccio, è lo \textbf{spreco di
-risorse}: dato che l'implementazione attuale non può sfruttare al meglio
-multipli core, per utilizzare in modo efficiente le risorse messe a disposizione
-dall'infrastruttura sottostante, è necessario creare macchine con requisiti
-minimi. Prendendo come riferimento la guida di Ubuntu Server\footnote{\url{https://ubuntu.com/server/docs/system-requirements}},
-sistema operativo utilizzato su tutte le istanze, e aumentando lievemente le
-risorse minime per poter eseguire anche le fasi più computazionalmente intensive,
-si ottengono dei requisiti di 2 CPU core, 8GB di RAM e 60GB di spazio di
-archiviazione. Questo porta il totale di risorse in utilizzo, considerando solo
-le macchine Robot, a 24 CPU core, 96GB di RAM e 720GB di spazio di archiviazione,
-la maggior parte delle quali non è possibile sfruttare appieno.
+risorse}: dal momento che l'implementazione attuale non può sfruttare al meglio multipli
+core, per utilizzare in modo efficiente le risorse messe a disposizione dall'infrastruttura
+sottostante, è necessario creare macchine con requisiti minimi. Prendendo come
+riferimento la guida di Ubuntu Server\footnote{\url{https://ubuntu.com/server/docs/system-requirements}},
+sistema operativo utilizzato su tutte le istanze, e aumentando lievemente le risorse
+minime per poter eseguire anche le fasi più computazionalmente intensive, si
+ottengono dei requisiti di 2 CPU core, 8GB di RAM e 60GB di spazio di archiviazione.
+Questo porta il totale di risorse in utilizzo, considerando solo le macchine Robot,
+a 24 CPU core, 96GB di RAM e 720GB di spazio di archiviazione, la maggior parte
+delle quali non è possibile sfruttare appieno.
