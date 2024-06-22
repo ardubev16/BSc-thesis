@@ -31,8 +31,15 @@
 \usepackage{xurl}
 \usepackage[pdfa]{hyperref}
 \hypersetup{breaklinks=true}
+\usepackage{nameref}
 % List
 \usepackage{enumitem}
+\usepackage{array}
+% Symbols
+\usepackage{pifont}
+\newcommand{\cmark}{\textcolor{green}{\ding{51}}}
+\newcommand{\xmark}{\textcolor{red}{\ding{55}}}
+\newcommand{\imark}{\textcolor{orange}{\ding{118}}}
 % Code
 \usepackage{listings}
 \usepackage{xcolor}
@@ -107,13 +114,13 @@ showtabs=false, tabsize=2, }
   \endgroup
 
   % Bibliography
-  \addcontentsline{toc}{chapter}{Bibliography}
+  \addcontentsline{toc}{chapter}{Bibliografia}
   % Alphabetical order of authors
   \bibliographystyle{plain}
   \bibliography{bibliography.bib}
 
   % Attachments
-  \titleformat{\chapter} {\normalfont\Huge\bfseries}{Appendix \thechapter}{1em}{}
+  \titleformat{\chapter} {\normalfont\Huge\bfseries}{Appendice \thechapter}{1em}{}
   \appendix
   \input{attachments/attachment.tex}
 \end{document}
