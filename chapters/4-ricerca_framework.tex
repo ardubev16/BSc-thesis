@@ -1,5 +1,5 @@
-\chapter{Ricerca framework adatto}
-\label{sec:ricerca_framework}
+\chapter{Analisi prerequisiti e possibili soluzioni}
+\label{sec:analisi_ricerca}
 
 Una volta esaminata l'implementazione attuale e identificati i suoi principali
 problemi nel capitolo precedente, è stato deciso di utilizzare un approccio DRY.
@@ -82,7 +82,7 @@ la necessità di scalare e utilizzare più risorse di quelle messe a disposizion
 sottostante. Questo problema può essere risolto utilizzando un approccio di
 scalabilità orizzontale. Il framework selezionato deve quindi offrire la possibilità
 di funzionare su cluster in modo relativamente semplice e veloce, idealmente
-utilizzando soluzioni ben conosciute quali Kubernetes\footnote{\url{https://kubernetes.io/}}.
+utilizzando soluzioni ben conosciute quali Kubernetes\cite{kubernetes}.
 
 \subsection{Open source, Manutenzione e Documentazione}
 \label{sub:open_source}
@@ -213,73 +213,72 @@ modo:
 
 \begin{itemize}
   \item \textbf{\nameref{sub:resource_usage}:} le task all'interno di Airflow
-    vengono eseguite tramite un Executor\footnote{\url{https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/executor/index.html}}.
-    Gli Executor di Airflow sono progettati in modo tale da rispettare un'interfaccia
-    comune ed essere intercambiabili. In questo caso particolare, viene
-    utilizzato il \texttt{CeleryExecutor} che utilizza lo stesso Celery come backend
-    per l'esecuzione delle task, permettendo un utilizzo efficiente delle
-    risorse della macchina tramite multithreading;
+    vengono eseguite tramite un Executor. Gli Executor di Airflow sono progettati
+    in modo tale da rispettare un'interfaccia comune ed essere intercambiabili.
+    In questo caso particolare, viene utilizzato il \texttt{CeleryExecutor} che
+    utilizza lo stesso Celery come backend per l'esecuzione delle task, permettendo
+    un utilizzo efficiente delle risorse della macchina tramite multithreading;
 
   \item \textbf{\nameref{sub:deps_definition}:} come è possibile vedere nel
     codice di esempio \ref{lst:dag-example}, Airflow, in determinati contesti, modifica
     la funzionalità degli operatori di bitshift (\texttt{<<} e \texttt{>>}) e delle
     liste (\texttt{[...]}) permettendo quindi una scrittura concisa ed esplicita
-    delle dipendenze tra le task\footnote{\url{https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/tasks.html}}.
-    Prendendo come esempio la seguente espressione, si può intuitivamente dedurre
-    che vengano eseguite nell'ordine \textit{first\_task}, \textit{second\_task}
-    e poi simultaneamente \textit{third\_task} e \textit{fourth\_task};
+    delle dipendenze tra le task. Prendendo come esempio la seguente espressione,
+    si può intuitivamente dedurre che vengano eseguite nell'ordine \textit{first\_task},
+    \textit{second\_task} e poi simultaneamente \textit{third\_task} e \textit{fourth\_task};
 
     \begin{lstlisting}[language=Python]
 first_task >> second_task >> [third_task, fourth_task]
 \end{lstlisting}
 
   \item \textbf{\nameref{sub:python_compatibility}:} Airflow è completamente
-    scritto in Python, ciò implica il fatto che anche le task siano definite da funzioni
-    Python e quindi implementare su Airflow le fasi già presenti su SATAYO risulta
-    triviale. Airflow è anche molto flessibile riguardo a come è implementato la
+    scritto in Python, ciò implica che anche le task siano definite da funzioni Python
+    e quindi implementare su Airflow le fasi già presenti su SATAYO risulta triviale.
+    Airflow risulta essere molto flessibile riguardo a come è implementata la
     funzione che viene eseguita, permettendo di utilizzare implementazioni in svariati
-    linguaggi di programmazione in modo nativo tramite diversi Operator\footnote{\url{https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/operators.html}}.
-    Un Operator non è altro che una task che svolge delle azioni predefinite,
-    utilizzando degli argomenti dati;
+    linguaggi di programmazione in modo nativo tramite diversi Operator. Un
+    Operator non è altro che una task che svolge delle azioni predefinite, utilizzando
+    degli argomenti dati;
 
   \item \textbf{\nameref{sub:scalable}:} utilizzando Celery come backend, Airflow
     riporta gli stessi vantaggi e svantaggi, in breve è possibile scalare
     orizzontalmente con Celery, ma è molto dispendioso a livello di tempo.
-    Fortunatamente Airflow è nativamente compatibile\footnote{\url{https://airflow.apache.org/docs/apache-airflow/stable/administration-and-deployment/production-deployment.html}}
-    con Kubernetes e offre come Executor alternativo il KubernetesExecutor che esegue
-    ogni task su un Pod dedicato, lasciando quindi la gestione delle risorse al
-    cluster sottostante. Grazie a Kubernetes, per aggiungere nodi al cluster, è sufficiente
-    creare una nuova macchina, installare Kubernetes e adottarla all'interno del
-    cluster con pochi comandi;
+    Fortunatamente Airflow è nativamente compatibile con Kubernetes e offre come
+    Executor alternativo il KubernetesExecutor che esegue ogni task su un Pod
+    dedicato, lasciando quindi la gestione delle risorse al cluster sottostante.
+    Grazie a Kubernetes, per aggiungere nodi al cluster, è sufficiente creare
+    una nuova macchina, installare Kubernetes e adottarla all'interno del cluster
+    con pochi comandi;
 
   \item \textbf{\nameref{sub:open_source}:} lo sviluppo del progetto Apache
     Airflow è sostenuto dalla \textit{Apache Software Foundation}\footnote{\url{https://apache.org/index.html}}
-    che ad oggi conta più di 320 progetti Open source. Inoltre il progetto Airflow
-    è molto attivo su GitHub, con circa 100 commit alla settimana nell'ultimo
-    periodo e oltre 35k stelle sulla repository. Inoltre è presente una community
-    molto grande sulla piattaforma Slack, e una documentazione molto vasta, completa
-    e dettagliata in cui è possibile trovare virtualmente tutto ciò che riguarda
+    che ad oggi conta più di 320 progetti Open source. Inoltre, il progetto
+    Airflow è molto attivo su GitHub, con circa 100 commit alla settimana nell'ultimo
+    periodo e oltre \num{35000} stelle sulla repository. In aggiunta è presente una
+    community molto grande sulla piattaforma Slack, e una documentazione molto
+    vasta, completa e dettagliata in cui è possibile trovare tutto ciò che riguarda
     l'utilizzo del progetto;
 
   \item \textbf{\nameref{sub:isolation}:} come accennato precedentemente, Airflow
     mette a disposizione diversi Operator, i quali permettono di eseguire task
     predeterminate o in diversi ambienti. Tra questi sono riportati i più interessanti
-    nell'ambito di isolabilità dell'esecuzione: il \texttt{PythonVirtualenvOperator}\footnote{\url{https://airflow.apache.org/docs/apache-airflow/stable/howto/operator/python.html}}
-    permette di eseguire codice Python all'interno di un Virtualenvironment, consentendo
-    l'utilizzo di dipendenze diverse o che potrebbero creare conflitti; il
-    \texttt{DockerOperator} permette di creare un container Docker da un'immagine
-    specificata, e di eseguire all'interno di esso il codice o programma
-    impostato, isolando di conseguenza l'intera esecuzione del programma dal resto
-    del sistema. Infine, nel caso in cui venga usato il \texttt{KubernetesExecutor},
-    l'esecuzione di ciascuna task è contenuta all'interno di un Pod che viene creato
-    appositamente e distrutto successivamente alla terminazione della funzione.
+    nell'ambito di isolabilità dell'esecuzione: il \texttt{PythonVirtualenvOperator}
+    permette di eseguire codice Python all'interno di un Virtualenvironment,
+    consentendo l'utilizzo di dipendenze diverse o che potrebbero creare
+    conflitti; il \texttt{DockerOperator} permette di creare un container Docker
+    da un'immagine specificata, e di eseguire all'interno di esso il codice o programma
+    impostato, isolando di conseguenza l'intera esecuzione del programma dal
+    resto del sistema. Infine, nel caso in cui venga usato il \texttt{KubernetesExecutor},
+    l'esecuzione di ciascuna task è contenuta all'interno di un Pod che viene
+    creato appositamente e distrutto successivamente alla terminazione della
+    funzione.
 
   \item \textbf{\nameref{sub:monitorable}:} concludendo, per quanto riguarda il monitoraggio
     dell'intero sistema, Airflow mette a disposizione molte metriche relative
-    all'esecuzione delle task e allo stato del sistema stesso. Le metriche in questione\footnote{\url{https://airflow.apache.org/docs/apache-airflow/stable/administration-and-deployment/logging-monitoring/metrics.html}}
-    possono essere esportate da Airflow utilizzando due formati standard: \texttt{StatsD}
-    e \texttt{OpenTelemetry}. Inoltre i messaggi di log delle singole task sono
-    molto configurabili ed è possibile impostare il modulo in modo tale che
-    questi vengano salvati sul filesystem locale, oppure esportati direttamente verso
-    servizi di terze parti.
+    all'esecuzione delle task e allo stato del sistema stesso. Le metriche in questione
+    possono essere esportate da Airflow utilizzando due formati standard:
+    \texttt{StatsD} e \texttt{OpenTelemetry}. Infine i messaggi di log delle singole
+    task risultano molto configurabili ed è possibile impostare il modulo in modo
+    tale che questi vengano salvati sul filesystem locale, oppure esportati
+    direttamente verso servizi di terze parti.
 \end{itemize}
