@@ -17,9 +17,11 @@
     "main.tex"
   ],
   "words": [
+    "ITOA",
     "Monitorabilità",
     "OSINT",
     "PRNG",
+    "Pavanello",
     "Retrocompatibilità",
     "SATAYO",
     "Virtualenv",
@@ -37,6 +39,7 @@
     "howpublished",
     "inotifywait",
     "isolabilità",
+    "istanziare",
     "istanziata",
     "latexmk",
     "lorenzo",
