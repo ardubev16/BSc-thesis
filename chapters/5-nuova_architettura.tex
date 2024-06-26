@@ -62,20 +62,21 @@ Per permettere una corretta integrazione del nuovo sistema all'interno di quello
 corrente, mantenendo tutte le funzionalità presenti, è necessario continuare ad utilizzare
 alcune funzionalità che potrebbero essere deprecate e sostituite interamente da Airflow.
 In particolare occorre mantenere l'uso del \texttt{tool\_progress}, descritto
-nella sezione \ref{sub:db:tasks}, in quanto esso viene utilizzato per calcolare la
-data di ultima esecuzione di una determinata fase di SATAYO e per individuare la
-fase che ha recuperato una certa evidenza. Per evitare la duplicazione di codice
-è stato deciso di implementare questa funzionalità all'interno del decoratore
-\texttt{@satayo\_task} (scritto utilizzando una classe Python) tramite le due funzioni
-\texttt{pre\_task} e \texttt{post\_task}. L'implementazione dettagliata è
-riportata in \ref{lst:retro}, si può notare come, nella prima funzione, eseguita
-prima dell'esecuzione della task, venga utilizzato un \texttt{host\_id} dedicato
-per le esecuzioni su Airflow, e sia creato un \texttt{tool\_progress} che riporta
-le informazioni dell'esecuzione delle task come se venissero eseguite sul sistema
-precedente. Nella seconda funzione, eseguita successivamente alla task, viene
-invece impostata la data e lo stato di termine di essa. Per il caso di errore di
-esecuzione viene chiamata una funzione di callback, presente tra gli argomenti
-della task Airflow, che imposta il \texttt{tool\_progress} in stato di errore.
+nella sezione \ref{sub:db:tasks}, in quanto questo viene utilizzato per calcolare
+la data di ultima esecuzione di una determinata fase di SATAYO e per individuare
+la fase che ha recuperato una certa evidenza. Per evitare la duplicazione di
+codice è stato deciso di implementare questa funzionalità all'interno del
+decoratore \texttt{@satayo\_task} (scritto utilizzando una classe Python) tramite
+le due funzioni \texttt{pre\_task} e \texttt{post\_task}. L'implementazione
+dettagliata è riportata in \ref{lst:retro}, si può notare come, nella prima
+funzione, eseguita prima dell'esecuzione della task, venga utilizzato un \texttt{host\_id}
+dedicato per le esecuzioni su Airflow, e sia creato un \texttt{tool\_progress} che
+riporta le informazioni dell'esecuzione delle task come se venissero eseguite sul
+sistema precedente. Nella seconda funzione, eseguita successivamente alla task,
+viene invece impostata la data e lo stato di termine di essa. Per il caso di errore
+di esecuzione viene chiamata una funzione di callback, presente tra gli
+argomenti della task Airflow, che imposta il \texttt{tool\_progress} in stato di
+errore.
 
 Un'altra funzionalità riportata momentaneamente è la possibilità di salvare
 certi messaggi di log all'interno del database. Questo è stato fatto per avere visibilità
@@ -132,7 +133,7 @@ Sebbene ci sia un monitoraggio continuo degli asset principali e più pericolosi
 in quanto più probabilmente utilizzati per organizzare campagne di Phishing, le fasi
 ricorrenti non coprono tutto il perimetro dei clienti. Per questo è necessario
 eseguire in modo ricorrente anche i controlli più pesanti e lunghi, ovviamente con
-minore frequenza. Data il più alto carico computazionale, è stato scelto di utilizzare
+minore frequenza. Dato il più alto carico computazionale, è stato scelto di utilizzare
 un approccio più controllato per schedulare i DAG delle nuove ricerche \texttt{start\_new\_research}.
 Nel dettaglio è presente un DAG \texttt{new\_research\_handler} che ha il
 compito di: collezionare i domini di cui eseguire la nuova ricerca, notificare
@@ -164,15 +165,15 @@ figura \ref{fig:new-hanlder}, si può notare la presenza delle seguenti task:
     quale avrà effettivamente il compito di avviare le nuove ricerche;
 
   \item \textbf{trigger\_create\_and\_start:} ha il compito fondamentale di
-    eseguire il DAG \texttt{create\_and\_start\_new\_research}, responsabile
-    della creazione della nuova ricerca sul database, eseguita importando tutte le
-    informazioni utili dalla ricerca precedente, e dell'avvio vero e proprio del
-    DAG \texttt{start\_new\_research} incaricato di eseguire effettivamente tutte
-    le task necessarie a svolgere una nuova ricerca. Questa task viene generata
-    in modo dinamico in base agli oggetti presenti nella lista generata allo
-    step precedente che corrispondono al numero di domini per cui istanziare una
-    nuova ricerca. In seguito, ciascuna Task Instance creerà una DAG Run
-    differente, del medesimo DAG, per ogni oggetto nella lista.
+    eseguire il DAG responsabile della creazione della nuova ricerca sul
+    database, \texttt{create\_and\_start\_new\_research}, la quale viene eseguita
+    importando tutte le informazioni utili dalla ricerca precedente, e dell'avvio
+    vero e proprio del DAG \texttt{start\_new\_research} incaricato di eseguire effettivamente
+    tutte le task necessarie a svolgere una nuova ricerca. Questa task viene
+    generata in modo dinamico in base agli oggetti presenti nella lista generata
+    allo step precedente che corrispondono al numero di domini per cui
+    istanziare una nuova ricerca. In seguito, ciascuna Task Instance creerà una
+    DAG Run differente, del medesimo DAG, per ogni oggetto nella lista.
 \end{itemize}
 
 \section{Task di sistema}
@@ -211,23 +212,23 @@ una migliore visibilità delle azioni della routine.
 \label{sec:deployment}
 
 Avendo a disposizione un ambiente di test limitato è stato deciso di utilizzare
-la strategia di rilascio \textit{Canary Deployment Strategy}. Il motivo
-principale della presenza di un contesto di test particolarmente ridotto è la
-natura del progetto. Molte funzionalità di SATAYO infatti si basano sul fatto di
-avere a disposizione informazioni passate dei domini in analisi, e questo può
-essere simulato in un ambiente di test, ma non è possibile riportare le informazioni
-come se fosse un environment di produzione vero e proprio. Un secondo problema, dettato
-dalla complessità del progetto, è la quantità ingente di fasi, ricorrenti e non,
-eseguite in produzione. Questo non permette infatti di utilizzare ambienti di test
-per fare prove di carico senza utilizzare un'infrastruttura identica a quella di
-produzione.
+la strategia di rilascio \textit{Canary Deployment Strategy}\cite{humble2010continuous}.
+Il motivo principale della presenza di un contesto di test particolarmente ridotto
+è la natura del progetto. Molte funzionalità di SATAYO infatti si basano sul
+fatto di avere a disposizione lo storico delle informazioni collezionate sui
+domini in analisi. Questo può essere simulato in un ambiente di test, ma non è
+possibile riportare le informazioni come se fosse un environment di produzione
+vero e proprio. Un secondo problema, dettato dalla complessità del progetto, è la
+quantità ingente di fasi, ricorrenti e non, eseguite in produzione. Questo non
+permette infatti di utilizzare ambienti di test per fare prove di carico senza
+utilizzare un'infrastruttura identica a quella di produzione.
 
-Per validare quindi i risultati ottenuti dalla nuova implementazione è stata utilizzata
-la strategia \textit{A/B Testing}, che consiste nell'eseguire la stessa operazione
-su due versioni diverse della stessa applicazione e confrontare i risultati. In
-questo caso sono state eseguite delle ricerche complete sullo stesso dominio, su
-entrambe le infrastrutture e sono stati paragonati, alla vecchia implementazione,
-il numero e la qualità dei risultati ottenuti dalla nuova.
+Per validare quindi i risultati ottenuti dalla nuova implementazione è stata
+utilizzata la strategia \textit{A/B Testing}\cite{QUIN2024112011}, che consiste nell'eseguire
+la stessa operazione su due versioni diverse della stessa applicazione e confrontare
+i risultati. In questo caso sono state eseguite delle ricerche complete sullo
+stesso dominio, su entrambe le infrastrutture e sono stati paragonati, alla
+vecchia implementazione, il numero e la qualità dei risultati ottenuti dalla nuova.
 
 Infine è stata eseguita la procedura di \textit{Canary Deployment} menzionata
 prima per migrare la vecchia versione a quella nuova. Il \textit{Canary
@@ -235,39 +236,44 @@ Deployment} consiste nel migrare gradualmente il carico di lavoro da una istanza
 ad un'altra, avente una versione più recente del software. Nel caso specifico di
 SATAYO sono state inizialmente migrate le fasi ricorrenti, procedendo con batch di
 circa 100 domini alla settimana. Una volta terminata la migrazione delle fasi
-schedulate si è passati alla migrazione delle nuove ricerche, che inizialmente venivano
-eseguite manualmente sulla nuova piattaforma, ed in seguito, a migrazione completa,
-sono state automatizzate.
+schedulate, si è passati alla migrazione delle nuove ricerche, che inizialmente
+venivano eseguite manualmente sulla nuova piattaforma, ed in seguito, a
+migrazione completa, sono state automatizzate.
 
 \section{Monitoraggio}
 \label{sec:monitoraggio}
 
-Ultimo sviluppo fondamentale per ottenere un sistema pronto al rilascio in produzione
-è stata l'implementazione di un sistema di monitoraggio. I requisiti di un tale
-sistema sono: una visione di insieme dello stato di esecuzione dei DAG e altre interfacce
-che presentino informazioni relative a tutto il sistema con maggiori dettagli e granularità.
-Per l'implementazione delle dashboard in questione è stato utilizzato il modulo
-di NetEye \textit{ITOA} (IT Operations Analytics), il quale è realizzato
-utilizzando il software di visualizzazione Open source \textbf{Grafana}\footnote{\url{https://grafana.com/grafana/}}.
-Nello specifico è stata realizzata una dashboard che include tutte le informazioni
-importanti riguardanti lo stato del sistema, la quale è presentata in figura
-\textbf{\textit{X}}. In questa visualizzazione sono presenti informazioni quali:
-il numero di fasi in errore, divise per tipologia (Airflow o Robot); il \textit{tempo
-macchina} utilizzato, inteso come tempo utilizzato dall'esecuzione delle task considerato
-sul numero massimo di task eseguibili in parallelo; le fasi in esecuzione e
-altre informazioni riguardanti le code dei due sistemi. Seconda dashboard di nota
-è sicuramente la \textit{Airflow Failed Management} \textbf{\textit{Y}},
+Ultimo sviluppo fondamentale per ottenere un sistema pronto al rilascio in
+produzione è stata l'implementazione di un sistema di monitoraggio. I requisiti di
+un tale sistema sono: una visione di insieme dello stato di esecuzione dei DAG e
+altre interfacce che presentino informazioni relative a tutto il sistema con
+maggiori dettagli e granularità. Per l'implementazione delle dashboard in questione
+è stato utilizzato il modulo di NetEye \textit{ITOA} (IT Operations Analytics), il
+quale è realizzato utilizzando il software di visualizzazione Open source \textbf{Grafana}\footnote{\url{https://grafana.com/grafana/}}.
+Nello specifico è stata realizzata una dashboard che include tutte le
+informazioni importanti riguardanti lo stato del sistema, la quale è presentata in
+figura \textbf{\textit{X}}. In questa visualizzazione sono presenti informazioni
+quali: il numero di fasi in errore, divise per tipologia (Airflow o Robot); il
+\textit{tempo macchina} utilizzato, inteso come tempo utilizzato dall'esecuzione
+delle task considerato sul numero massimo di task eseguibili in parallelo; le fasi
+in esecuzione e altre informazioni riguardanti le code dei due sistemi. Una
+seconda dashboard di rilievo è sicuramente la \textit{Airflow Failed Management}\ref{fig:errors_dash},
 utilizzata appunto per gestire e rilanciare le fasi che hanno prodotto errori di
 esecuzione. In questa dashboard è possibile notare una visualizzazione generale,
 divisa per tipologia di DAG a cui appartengono le task in errore e un'aggregazione
-del numero di fasi diverse che hanno prodotto errori. Al centro è presente una tabella
-con tutti gli errori da gestire e link rapidi alle rispettive pagine di log.
-Entrambe le dashboard hanno associato ad ogni pannello un link rapido alla
-pagina inerente all'informazione mostrata. Oltre a queste sono presenti anche altre
-visualizzazioni quali: un'aggregazione di statistiche di esecuzione delle fasi, monitoraggio
-delle API utilizzate dai vari servizi a pagamento sui quali si basa SATAYO e storico
-dell'utilizzo di \textit{tempo macchina}.
+del numero di fasi diverse che hanno prodotto errori. Al centro è presente una
+tabella con tutti gli errori da gestire e link rapidi alle rispettive pagine di
+log. Entrambe le dashboard hanno associato ad ogni pannello un link rapido alla pagina
+inerente all'informazione mostrata. Oltre a queste sono presenti anche altre
+visualizzazioni quali: un'aggregazione di statistiche di esecuzione delle fasi,
+monitoraggio delle API utilizzate dai vari servizi a pagamento sui quali si basa
+SATAYO e storico dell'utilizzo di \textit{tempo macchina}.
 
 \textbf{\textit{INSERIRE DASHBOARD PRINCIPALE DI SATAYO, X}}
 
-\textbf{\textit{INSERIRE DASHBOARD GESTIONE ERRORI, Y}}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=.8\linewidth]{images/SATAYO_errors_dashboard.png}
+  \caption{Dashboard di gestione errori di SATAYO}
+  \label{fig:errors_dash}
+\end{figure}

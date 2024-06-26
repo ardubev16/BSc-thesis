@@ -30,7 +30,14 @@
 % Hyperlink
 \usepackage{xurl}
 \usepackage[pdfa]{hyperref}
-\hypersetup{breaklinks=true}
+\hypersetup{
+  breaklinks=true,
+  colorlinks=true, % Colora i link invece di usare riquadri colorati
+  linkcolor=black, % Colore dei link interni (indice, sezioni)
+  citecolor=black, % Colore delle citazioni
+  filecolor=black, % Colore dei link ai file locali
+  urlcolor=black % Colore degli URL
+}
 \usepackage{nameref}
 % List
 \usepackage{enumitem}
