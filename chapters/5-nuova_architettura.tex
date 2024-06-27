@@ -252,28 +252,33 @@ maggiori dettagli e granularità. Per l'implementazione delle dashboard in quest
 quale è realizzato utilizzando il software di visualizzazione Open source \textbf{Grafana}\footnote{\url{https://grafana.com/grafana/}}.
 Nello specifico è stata realizzata una dashboard che include tutte le
 informazioni importanti riguardanti lo stato del sistema, la quale è presentata in
-figura \textbf{\textit{X}}. In questa visualizzazione sono presenti informazioni
-quali: il numero di fasi in errore, divise per tipologia (Airflow o Robot); il
-\textit{tempo macchina} utilizzato, inteso come tempo utilizzato dall'esecuzione
-delle task considerato sul numero massimo di task eseguibili in parallelo; le fasi
-in esecuzione e altre informazioni riguardanti le code dei due sistemi. Una
-seconda dashboard di rilievo è sicuramente la \textit{Airflow Failed Management}\ref{fig:errors_dash},
+figura \ref{fig:main_dash}. In questa visualizzazione sono presenti informazioni
+quali: il numero di fasi in errore, divise per tipologia (Airflow o Robot); il \textit{tempo
+macchina} utilizzato, inteso come tempo utilizzato dall'esecuzione delle task considerato
+sul numero massimo di task eseguibili in parallelo; le fasi in esecuzione e
+altre informazioni riguardanti le code dei due sistemi. Una seconda dashboard di
+rilievo è sicuramente la \textit{Airflow Failed Management}\ref{fig:errors_dash},
 utilizzata appunto per gestire e rilanciare le fasi che hanno prodotto errori di
 esecuzione. In questa dashboard è possibile notare una visualizzazione generale,
 divisa per tipologia di DAG a cui appartengono le task in errore e un'aggregazione
-del numero di fasi diverse che hanno prodotto errori. Al centro è presente una
-tabella con tutti gli errori da gestire e link rapidi alle rispettive pagine di
-log. Entrambe le dashboard hanno associato ad ogni pannello un link rapido alla pagina
-inerente all'informazione mostrata. Oltre a queste sono presenti anche altre
-visualizzazioni quali: un'aggregazione di statistiche di esecuzione delle fasi,
-monitoraggio delle API utilizzate dai vari servizi a pagamento sui quali si basa
-SATAYO e storico dell'utilizzo di \textit{tempo macchina}.
-
-\textbf{\textit{INSERIRE DASHBOARD PRINCIPALE DI SATAYO, X}}
+del numero di fasi diverse che hanno prodotto errori. Al centro è presente una tabella
+con tutti gli errori da gestire e link rapidi alle rispettive pagine di log.
+Entrambe le dashboard hanno associato ad ogni pannello un link rapido alla
+pagina inerente all'informazione mostrata. Oltre a queste sono presenti anche altre
+visualizzazioni quali: un'aggregazione di statistiche di esecuzione delle fasi, monitoraggio
+delle API utilizzate dai vari servizi a pagamento sui quali si basa SATAYO e storico
+dell'utilizzo di \textit{tempo macchina}.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=.8\linewidth]{images/SATAYO_errors_dashboard.png}
+  \includegraphics[width=.9\linewidth]{images/SATAYO_main_dashboard.png}
+  \caption{Dashboard principale di SATAYO}
+  \label{fig:main_dash}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=.9\linewidth]{images/SATAYO_errors_dashboard.png}
   \caption{Dashboard di gestione errori di SATAYO}
   \label{fig:errors_dash}
 \end{figure}

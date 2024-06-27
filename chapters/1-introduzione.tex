@@ -1,5 +1,42 @@
 \chapter{Introduzione}
 \label{cha:introduction}
 
-\lipsum[1]
-% discorso unico generico in cui parli dell'azienda, del SOC e di cosa ti è stato richiesto
+Questo elaborato presenta ed analizza l'esperienza affrontata durante il
+tirocinio formativo presso l'azienda Würth Phoenix. Würth Phoenix\footnote{\url{https://www.wuerth-phoenix.com/azienda/}}
+è un'azienda di consulenza IT fondata a Bolzano nel 2000 e facente parte del
+Gruppo Würth. Ad oggi è formata oltre 200 dipendenti e da tre sedi, di cui la
+principale a Bolzano e altre due a Milano e Roma. L'azienda offre servizi e consulenza
+IT in ambito di Business Applications, IT Systems Management, Service Management
+e Cyber Security. Il tirocinio è stato svolto all'interno del team SEC4U, il quale
+si occupa di soluzioni di sicurezza informatica, mettendo a disposizione i
+seguenti servizi\footnote{\url{https://www.wuerth-phoenix.com/cyber-security/}}:
+
+\begin{itemize}
+  \item \textbf{Offensive Services:} consistono principalmente in Penetration
+    Testing e Red Teaming, attività che hanno lo scopo di testare in modo attivo
+    l'infrastruttura aziendale per trovare vulnerabilità che potrebbero essere sfruttate
+    da individui malevoli. Queste attività vengono svolte simulando gli attacchi
+    effetuati da veri Hacker, talvolta con l'ausilio di campagne di phishing, in
+    modo tale da trovare tutte le falle all'interno dell'infrastruttura di un
+    cliente;
+
+  \item \textbf{Defensive Services:} sono offerti servizi di monitoraggio dell'infrastruttura
+    tramite il SOC (Security Operation Center) Attacker Centric attivo 24/7.
+    Questo servizio è possibile grazie all'utilizzo di NetEye Cloud, su cui vengono
+    collezionati i log e gli eventi di sicurezza prodotti dall'infrastruttura del
+    cliente, permettendo agli analisti di analizzare tali eventi ed
+    eventualmente, contattare il cliente in caso di traffico o azioni anomale;
+
+  \item \textbf{Cyber Threat Intelligence:} consiste nel monitorare l'esposizione
+    online di un'organizzazione e di scoprire anticipatamente la presenza di
+    minacce. Questo servizio è offerto grazie a SATAYO, una piattaforma di OSINT
+    e Threat Intelligence automatizzata, completamente sviluppata internamente al
+    team SEC4U.
+\end{itemize}
+
+Quest'ultima, nello specifico, è stato l'argomento principale del lavoro svolto
+durante il tirocinio, il quale ha comportato un'analisi e revisione dell'infrastruttura
+backend di SATAYO. In seguito ad un'analisi sulla quantità di asset da
+monitorare all'interno della piattaforma, è stato infatti ritenuto necessario una
+profonda reimplementazione del sistema che si occupa del collezionamento delle informazioni
+OSINT, la quale verrà descritta approfonditamente nei prossimi capitoli.
