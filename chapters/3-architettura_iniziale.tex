@@ -128,13 +128,18 @@ oltre 130. Non essendo possibile citare e descriverle tutte, vengono riportate
 quelle principali e più inerenti ai problemi e alle modifiche che verranno
 descritte al capitolo \ref{cha:nuova_architettura}.
 
-\textbf{\textit{INSERIRE ER TABELLE (2 cluster): ui\_org, domain, research | tool\_progress,
-tool, host, log}}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=.8\linewidth]{images/SATAYO_db-core-er.png}
+  \caption{Diagramma ER rappresentante le tabelle in oggetto. È stato utilizzato
+  lo stile \textit{Crow's Foot}}
+  \label{fig:er_diagram}
+\end{figure}
 
 \subsection{Gestione clienti, domini e ricerche}
 \label{sub:db:mgmt}
 
-Il primo cluster di tabelle, rappresentato sulla sinistra in figura \textbf{\textit{X}}
+Il primo cluster di tabelle, rappresentato sulla sinistra in figura \ref{fig:er_diagram}
 forma il cuore del database di SATAYO, queste sono infatti tabelle che
 contengono i dati del cliente, dei domini da analizzare e delle ricerche OSINT effettuate
 sui vari domini. Nel dettaglio le tabelle rappresentate contengono le seguenti
@@ -164,8 +169,8 @@ informazioni:
 \subsection{Gestione fasi}
 \label{sub:db:tasks}
 
-Il secondo cluster, presente sulla destra della figura \textbf{\textit{X}}
-contiene invece informazioni di natura operativa, quali code di esecuzione e metadati
+Il secondo cluster, presente sulla destra della figura \ref{fig:er_diagram} contiene
+invece informazioni di natura operativa, quali code di esecuzione e metadati
 delle fasi. Le funzionalità principali sono le seguenti:
 
 \begin{itemize}
@@ -193,38 +198,38 @@ delle fasi. Le funzionalità principali sono le seguenti:
     durante le esecuzioni di task direttamente dal frontend.
 \end{itemize}
 
-\pagebreak
 \section{Problemi con architettura corrente}
 \label{sec:problemi}
 
-In seguito ad un'analisi di carico e ad una proiezione del numero di domini da
-monitorare nei prossimi mesi, sono risultati immediatamente evidenti i problemi di
-scalabilità che si sarebbero presentati se si fosse mantenuta l'architettura attuale.
+In seguito ad un'analisi di carico e ad una proiezione del numero di domini da monitorare
+nei prossimi mesi, sono risultati immediatamente evidenti i problemi di
+scalabilità che si sarebbero presentati se si fosse mantenuta l'architettura
+attuale.
 
-Come accennato nelle sezioni precedenti, l'implementazione corrente permette di
-scalare orizzontalmente in modo teoricamente semplice: se c'è bisogno di ulteriore
-tempo di esecuzione è sufficiente aggiungere un'altra macchina Robot,
-configurarla secondo una data documentazione e aggiungere eventuali entry nel
-database. Questa può essere una valida soluzione in caso non sia necessario eseguire
-la procedura molto spesso. Contrariamente, se fosse necessario scalare in modo più
-che lineare, questa soluzione porterebbe ad un \textbf{notevole dispendio di
-tempo} per la configurazione iniziale, ma soprattutto per la gestione e
-manutenzione futura del sistema.
+Come accennato nelle sezioni precedenti, l'implementazione corrente permette di scalare
+orizzontalmente in modo teoricamente semplice: se c'è bisogno di ulteriore tempo
+di esecuzione è sufficiente aggiungere un'altra macchina Robot, configurarla secondo
+una data documentazione e aggiungere eventuali entry nel database. Questa può
+essere una valida soluzione in caso non sia necessario eseguire la procedura
+molto spesso. Contrariamente, se fosse necessario scalare in modo più che
+lineare, questa soluzione porterebbe ad un \textbf{notevole dispendio di tempo}
+per la configurazione iniziale, ma soprattutto per la gestione e manutenzione futura
+del sistema.
 
 Un altro problema, a cui porterebbe un simile approccio, è lo \textbf{spreco di
-risorse}: dal momento che l'implementazione attuale non può sfruttare al meglio
-multipli core, per utilizzare in modo efficiente le risorse messe a disposizione
-dall'infrastruttura sottostante, è necessario creare macchine con requisiti
-minimi. Prendendo come riferimento la guida di Ubuntu Server\footnote{\url{https://ubuntu.com/server/docs/system-requirements}},
-sistema operativo utilizzato su tutte le istanze, e aumentando lievemente le
-risorse minime per poter eseguire anche le fasi più computazionalmente intensive,
-si ottengono dei requisiti di 2 CPU core, 8GB di RAM e 60GB di spazio di
-archiviazione. Questo porta il totale di risorse in utilizzo, considerando solo
-le macchine Robot, a 24 CPU core, 96GB di RAM e 720GB di spazio di archiviazione,
-la maggior parte delle quali non è possibile sfruttare appieno.
+risorse}: dal momento che l'implementazione attuale non può sfruttare al meglio multipli
+core, per utilizzare in modo efficiente le risorse messe a disposizione dall'infrastruttura
+sottostante, è necessario creare macchine con requisiti minimi. Prendendo come
+riferimento la guida di Ubuntu Server\footnote{\url{https://ubuntu.com/server/docs/system-requirements}},
+sistema operativo utilizzato su tutte le istanze, e aumentando lievemente le risorse
+minime per poter eseguire anche le fasi più computazionalmente intensive, si
+ottengono dei requisiti di 2 CPU core, 8GB di RAM e 60GB di spazio di archiviazione.
+Questo porta il totale di risorse in utilizzo, considerando solo le macchine Robot,
+a 24 CPU core, 96GB di RAM e 720GB di spazio di archiviazione, la maggior parte
+delle quali non è possibile sfruttare appieno.
 
-Terza criticità è la gestione dei log, i quali al momento vengono collezionati
-tramite query direttamente sul database di SATAYO. Questo può portare ad alcune situazioni
-in cui certi errori non vengono riportati correttamente; un esempio può essere
-il caso in cui si perda la connessione con il database, la fase andrebbe in errore
-ma non verrebbe correttamente riportato il messaggio di log.
+Terza criticità è la gestione dei log, i quali al momento vengono collezionati tramite
+query direttamente sul database di SATAYO. Questo può portare ad alcune
+situazioni in cui certi errori non vengono riportati correttamente; un esempio può
+essere il caso in cui si perda la connessione con il database, la fase andrebbe
+in errore ma non verrebbe correttamente riportato il messaggio di log.
