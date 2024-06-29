@@ -44,9 +44,9 @@ implementazione sia compatibile con quella vecchia. Queste modifiche si possono 
 nel codice nuovo \ref{lst:task-impl-new}, in cui viene direttamente eseguito il
 corpo della fase.
 
-Come precedentemente riportato, attualmente Airflow è utilizzato tramite Docker Compose,
-è quindi in funzione su una macchina singola e l'infrastruttura è come riportato
-in figura \ref{fig:infra_new}.
+Come precedentemente riportato, essendo attualmente utilizzato tramite Docker Compose,
+Airflow è in funzione su una macchina singola e l'infrastruttura è come
+riportato in figura \ref{fig:infra_new}.
 
 \pagebreak
 \lstinputlisting[language=Python, caption=Esempio della precedente implementazione
@@ -154,8 +154,8 @@ figura \ref{fig:new-hanlder}, si può notare la presenza delle seguenti task:
     messaggio di notifica con Bot Telegram\footnote{\url{https://core.telegram.org/bots}},
     questo permette di avere una visione immediata e di alto livello sulle nuove
     ricerche che stanno per essere eseguite. Questo è importante perché, come
-    specificato precedentemente, si tratta di un'operazione importante che, in
-    caso di malfunzionamenti potrebbe portare a gravi ripercussioni;
+    specificato precedentemente, si tratta di un'operazione importante che in caso
+    di malfunzionamenti potrebbe portare a gravi ripercussioni;
 
   \item \textbf{expand\_trigger\_arguments:} è una task di natura puramente
     implementativa, serve cioè soltanto a convertire la lista di domini fornita da
@@ -194,7 +194,7 @@ minuti, che gestisce i seguenti due casi:
 \begin{itemize}
   \item se viene trovato un tool\_progress che individua la task come in esecuzione
     e, al contrario, all'interno di Airflow tale task non ha lo stato \textit{running},
-    essa viene impostata, all'interno del db di SATAYO come \textit{failed};
+    essa viene impostata all'interno del db di SATAYO come \textit{failed};
 
   \item al contrario invece, se all'interno della tabella dei tool\_progress
     viene trovata una fase in stato \textit{failed}, ma all'interno di Airflow
@@ -257,17 +257,18 @@ quali: il numero di fasi in errore, divise per tipologia (Airflow o Robot); il \
 macchina} utilizzato, inteso come tempo utilizzato dall'esecuzione delle task considerato
 sul numero massimo di task eseguibili in parallelo; le fasi in esecuzione e
 altre informazioni riguardanti le code dei due sistemi. Una seconda dashboard di
-rilievo è sicuramente la \textit{Airflow Failed Management}\ref{fig:errors_dash},
-utilizzata appunto per gestire e rilanciare le fasi che hanno prodotto errori di
-esecuzione. In questa dashboard è possibile notare una visualizzazione generale,
-divisa per tipologia di DAG a cui appartengono le task in errore e un'aggregazione
-del numero di fasi diverse che hanno prodotto errori. Al centro è presente una tabella
-con tutti gli errori da gestire e link rapidi alle rispettive pagine di log.
-Entrambe le dashboard hanno associato ad ogni pannello un link rapido alla
-pagina inerente all'informazione mostrata. Oltre a queste sono presenti anche altre
-visualizzazioni quali: un'aggregazione di statistiche di esecuzione delle fasi, monitoraggio
-delle API utilizzate dai vari servizi a pagamento sui quali si basa SATAYO e storico
-dell'utilizzo di \textit{tempo macchina}.
+rilievo è sicuramente la \textit{Airflow Failed Management}
+\ref{fig:errors_dash}, utilizzata appunto per gestire e rilanciare le fasi che hanno
+prodotto errori di esecuzione. In questa dashboard è possibile notare una
+visualizzazione generale, divisa per tipologia di DAG a cui appartengono le task
+in errore e un'aggregazione del numero di fasi diverse che hanno prodotto errori.
+Al centro è presente una tabella con tutti gli errori da gestire e link rapidi
+alle rispettive pagine di log. Entrambe le dashboard hanno associato ad ogni pannello
+un link rapido alla pagina inerente all'informazione mostrata. Oltre a queste
+sono presenti anche altre visualizzazioni quali: un'aggregazione di statistiche di
+esecuzione delle fasi, monitoraggio delle API utilizzate dai vari servizi a
+pagamento sui quali si basa SATAYO e storico dell'utilizzo di \textit{tempo
+macchina}.
 
 \begin{figure}[htbp]
   \centering
