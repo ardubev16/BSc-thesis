@@ -1,53 +1,21 @@
-# Thesis Template
+# Modernizzazione della piattaforma di Cyber Threat Intelligence SATAYO
 
-[![ci](https://github.com/unitn-drive/thesis/actions/workflows/ci.yaml/badge.svg)](https://github.com/unitn-drive/thesis/actions/workflows/ci.yaml)
+## Abstract
+
+SATAYO è una piattaforma di Cyber Threat Intelligence, completamente sviluppata da
+Würth Phoenix, che permette di monitorare l'esposizione online di un'organizzazione
+e di individuare anticipatamente eventuali minacce cyber. In questo elaborato verrà
+trattata l'architettura iniziale del progetto e le problematiche presenti che ne
+impedivano la scalabilità. Verranno individuati e analizzati i requisiti da
+soddisfare durante il processo di modernizzazione, e descritto il processo utilizzato
+per individuare la soluzione più adatta al problema presentatosi. Verrà infine
+introdotto Apache Airflow, progetto Open source, che prenderà il posto del core
+dell'implementazione attuale permettendo una maggiore scalabilità e migliore
+gestione delle fasi di ricerca.
+
+## Template
 
 Thesis Template for Computer Science at the [University of Trento](https://www.unitn.it)
-
-## Development
-
-> [!TIP]
-> It is highly recommended to use [`Visual Studio Code`](https://code.visualstudio.com) editor
-
-### Requirements
-
-| **Name**   | **Homepage**                  |
-| ---------- | ----------------------------- |
-| `TeX Live` | <https://www.tug.org/texlive> |
-| `Node.js`  | <https://nodejs.org>          |
-| `npm`      | <https://www.npmjs.com>       |
-
-### Preparation
-
-1. Clone
-
-   ```sh
-   git clone https://github.com/unitn-drive/thesis.git
-   cd thesis
-   ```
-
-1. Install Dependencies
-
-   ```sh
-   npm ci
-   ```
-
-### Build
-
-```sh
-npm run build
-```
-
-### Scripts
-
-> **Note**: Execute with `npm run <NAME>`
-
-| **Name** | **Description**  |
-| -------- | ---------------- |
-| `build`  | Build PDF        |
-| `check`  | Check for errors |
-| `clean`  | Clean            |
-| `fix`    | Fix errors       |
 
 ## License
 
