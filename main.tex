@@ -1,4 +1,4 @@
-\documentclass[a4paper, 11pt, titlepage, twoside, openany]{book}
+\documentclass[a4paper, 11pt, titlepage, twoside, openright]{book}
 \usepackage{plain}
 \usepackage{setspace}
 % Layout
@@ -79,11 +79,13 @@ showtabs=false, tabsize=2, }
   \pagenumbering{gobble}
   \input{etc/cover}
   \clearpage
+  \shipout\null
 
   % Acknowledgements
   \input{etc/acknowledgements}
   \clearpage
   \pagestyle{plain}
+  \shipout\null
 
   % Table of Contents
   \frontmatter
